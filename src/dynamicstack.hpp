@@ -3,28 +3,36 @@
 #include <iostream>
 #include <time.h>
 #include <unistd.h>
+#include <string>
+using namespace std;
 
-typedef struct Item Item;
+typedef struct DItem DItem;
 typedef struct Block Block;
-typedef struct Pilha Pilha;
+typedef struct DPilha DPilha;
 
-struct Item{
-	int val;
+struct DItem{
+	//int val;
+    string val;
 };
 
 struct Block{
-	Item data;
+	DItem data;
 	Block *prox;
 };
 
-struct Pilha{
+struct DPilha{
 	Block *base;
 	Block *top;
 };
 
-void FPVazia(Pilha *p);
-void Push(Pilha *p, Item d);
-void Pop(Pilha *p, Item *d);
-void PImprime(Pilha *p);
+void DFPVazia(DPilha *p);
+void Push(DPilha *p, DItem d);
+void Pop(DPilha *p, DItem *d);
+void DPImprime(DPilha *p);
 
+void problem_2_a();
+void decide_if_operand(string math_op, DPilha *operands);
+
+bool decide_if_operator(char n);
+void fill_operators_stack(DPilha *operators, string math_op, int size);
 #endif
