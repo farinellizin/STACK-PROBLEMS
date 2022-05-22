@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 typedef struct DItem DItem;
@@ -31,7 +32,10 @@ void Pop(DPilha *p, DItem *d);
 void DPImprime(DPilha *p);
 
 void problem_2_a();
-void decide_if_operand(string math_op, DPilha *operands);
+// void decide_if_operand(string math_op, DPilha *operands);
+void fill_operands_stack(DPilha *operands, string math_op);
+bool decide_what_to_treat(char n);
+string treat_string(string math_op, int size);
 
 bool decide_if_operator(char n);
 void fill_operators_stack(DPilha *operators, string math_op, int size);
