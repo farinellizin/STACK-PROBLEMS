@@ -79,6 +79,19 @@ string treat_string(string math_op, int size) {
     return math_op;
 }
 
+string treat_replicas(string math_op, int size) {
+    for (int i = 0; i < size; i++) {
+        if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2] != '@') {
+            math_op.erase(i, i);
+        } else if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2]) {
+            math_op.erase(i, i+1);
+        }
+    }
+
+    cout << "MATH_OP: " << math_op << endl << endl;
+    return math_op;
+}
+
 void fill_operands_stack(DPilha *operands, string math_op) {
     DItem aux;
     size_t pos = 0;
@@ -131,7 +144,10 @@ void problem_2_a() {
     DPImprime(&operators);
 
     cout << endl << endl << endl << endl;
-    math_op = treat_string(math_op, size+1);
+    math_op = treat_string(math_op, size);
+    size = math_op.size();
+    math_op = treat_replicas(math_op, size);
+
     cout << math_op << endl << endl << endl << endl;
 
     cout << endl << "\t\t\t STACK OPERANDS: " << endl << endl;

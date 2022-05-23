@@ -36,6 +36,7 @@ void problem_2_a();
 void fill_operands_stack(DPilha *operands, string math_op);
 bool decide_what_to_treat(char n);
 string treat_string(string math_op, int size);
+string treat_replicas(string math_op, int size);
 
 bool decide_if_operator(char n);
 void fill_operators_stack(DPilha *operators, string math_op, int size);
