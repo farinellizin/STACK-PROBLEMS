@@ -80,12 +80,24 @@ string treat_string(string math_op, int size) {
 }
 
 string treat_replicas(string math_op, int size) {
+    //int j;
     for (int i = 0; i < size; i++) {
-        if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2] != '@') {
-            math_op.erase(i, i);
-        } else if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2]) {
+        // if (math_op[i] == '@') {
+        //     j = i;
+        //     while (math_op[j] == '@') {
+        //         j++;
+        //     }
+        //     math_op.erase(i, j);
+            
+        // }
+        if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2] == '@') {
             math_op.erase(i, i+1);
         }
+        
+        if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2] != '@') {
+            math_op.erase(i, i);
+        }
+        
     }
 
     cout << "MATH_OP: " << math_op << endl << endl;
