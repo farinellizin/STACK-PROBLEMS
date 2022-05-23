@@ -33,8 +33,7 @@ void DPImprime(DPilha *p){
 
 	aux = p -> top;
 	while(aux != p -> base){
-		cout << aux -> data.val << endl;
-        //printf("%d\n", aux -> data.val);
+		cout << "\t\t\t\t\t\t" << aux -> data.val << endl;
 		aux = aux -> prox;
 	}
 }
@@ -80,16 +79,7 @@ string treat_string(string math_op, int size) {
 }
 
 string treat_replicas(string math_op, int size) {
-    //int j;
     for (int i = 0; i < size; i++) {
-        // if (math_op[i] == '@') {
-        //     j = i;
-        //     while (math_op[j] == '@') {
-        //         j++;
-        //     }
-        //     math_op.erase(i, j);
-            
-        // }
         if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2] == '@') {
             math_op.erase(i, i+1);
         }
@@ -97,10 +87,8 @@ string treat_replicas(string math_op, int size) {
         if (math_op[i] == '@' && math_op[i+1] == '@' && math_op[i+2] != '@') {
             math_op.erase(i, i);
         }
-        
     }
 
-    cout << "MATH_OP: " << math_op << endl << endl;
     return math_op;
 }
 
@@ -116,33 +104,13 @@ void fill_operands_stack(DPilha *operands, string math_op) {
     }
 }
 
-// void read_sequence(List *l, string s) {
-//     ifstream file;
-//     string str, delimiter = " ";
-//     Item aux;
-//     size_t pos = 0;
-
-//     file.open(s);
-//     if (file.is_open()) {
-//         while (!file.eof()) {
-//             getline(file, str);
-//             while ((pos = str.find(delimiter)) != string::npos) {
-//                 aux.val = (str.substr(0, pos));
-//                 str.erase(0, pos + delimiter.length());
-//                 list_insert(l, aux);
-//             }
-//         }
-//     }
-// }
-
 void problem_2_a() {
     string math_op;
+    cout << endl << "----------------------------------------------------------------------------------------------";
 
-    cout << "\t- Please, inform a mathematical operation of your wish: ";
+    cout << endl << endl << "\t\t- Please, inform a mathematical operation of your wish: ";
     getline(cin, math_op);
     math_op = math_op + "@";
-    cout << endl << "MATH OP: " << math_op << endl << endl;
-    
     math_op.erase(remove(math_op.begin(), math_op.end(), ' '), math_op.end());
     int size = math_op.size();
 
@@ -152,17 +120,15 @@ void problem_2_a() {
     DFPVazia(&operators);
 
     fill_operators_stack(&operators, math_op, size);
-    cout << endl << "\t\t\t STACK OPERATORS: " << endl << endl;
+    cout << endl << "\t\t   ~ Stack containing only the operators of your operation ~" << endl << endl;
     DPImprime(&operators);
 
-    cout << endl << endl << endl << endl;
     math_op = treat_string(math_op, size);
     size = math_op.size();
     math_op = treat_replicas(math_op, size);
 
-    cout << math_op << endl << endl << endl << endl;
-
-    cout << endl << "\t\t\t STACK OPERANDS: " << endl << endl;
+    cout << endl << "\t\t   ~ Stack containing only the operands of your operation ~" << endl << endl;
     fill_operands_stack(&operands, math_op);
     DPImprime(&operands);
+    cout << endl << endl;
 }
