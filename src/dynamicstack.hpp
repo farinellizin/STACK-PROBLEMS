@@ -12,7 +12,8 @@ typedef struct Block Block;
 typedef struct DPilha DPilha;
 
 struct DItem{
-	//int val;
+	int value;
+    int index;
     string val;
 };
 
@@ -30,14 +31,22 @@ void DFPVazia(DPilha *p);
 void Push(DPilha *p, DItem d);
 void Pop(DPilha *p, DItem *d);
 void DPImprime(DPilha *p);
+bool stack_is_empty(DPilha *p);
 
 void problem_2_a();
-// void decide_if_operand(string math_op, DPilha *operands);
 void fill_operands_stack(DPilha *operands, string math_op);
 bool decide_what_to_treat(char n);
 string treat_string(string math_op, int size);
 string treat_replicas(string math_op, int size);
-
 bool decide_if_operator(char n);
 void fill_operators_stack(DPilha *operators, string math_op, int size);
+
+void problem_2_d();
+void push_fibonacci(DPilha *p, int value, int index);
+void pop_fibonacci(DPilha *p, int *value, int *index);
+void print_fibonacci(DPilha *p);
+bool verify_index(DPilha *p, int index);
+void print_fibonacci_single_value(DPilha *p, int index);
+void fibonacci_calc(DPilha *p, int value);
+
 #endif
