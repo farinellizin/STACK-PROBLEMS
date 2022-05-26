@@ -175,22 +175,32 @@ void print_fibonacci(DPilha *p) {
     
     aux = p -> top;
     while (aux != p -> base) {
-        cout << "\t\t\t" << aux -> data.index;
+        cout << "\t\t\t    " << aux -> data.index;
         cout << "\t\t\t" << aux -> data.value << endl;
         aux = aux -> prox;
     }
 }
 
 bool verify_index(DPilha *p, int index) {
-    Block *aux;
+    Block *tmp_block;
+    DPilha tmp;
+    DFPVazia(&tmp);
+    int value, index_aux;
 
-    aux = p -> top;
-    while (aux != p -> base) {
-        if (aux -> data.index == index) {
+    while (p -> base != p -> top) {
+        pop_fibonacci(p, &value, &index_aux);
+        push_fibonacci(&tmp, value, index_aux);
+        tmp_block = tmp.top;
+
+        if (tmp_block -> data.index == index) {
             cout << "TO AQUI!" << endl << endl;
+
+            while(tmp.top != tmp.base) {
+                pop_fibonacci(&tmp, &value, &index_aux);
+                push_fibonacci(p, value, index_aux);
+            }
             return true;
         }
-        aux = aux -> prox;
     }
 
     cout << "NÃO TO AQUI!" << endl << endl;
@@ -212,52 +222,52 @@ void print_fibonacci_single_value(DPilha *p, int index) {
     }
 }
 
-void fibonacci_calc(DPilha *p, int index) {
-    Block *aux;
-    int n1;
-    int n2;
-    int n3;
-    int i = 0;
-    // int j = 1;
-    
+// void fibonacci_calc(DPilha *p, int index) {
+//     Block *aux;
+//     int n1;
+//     int n2;
+//     int n3;
+//     int i = 0;
 
-    aux = p -> top;
-    int tmp = aux -> data.index;
-    // // cout << aux -> data.value;
-    // // aux = aux -> prox;
-    // // cout << endl << aux -> data.value;
-    // // aux = aux -> prox;
-    // // cout << endl << aux -> data.value;
-    // n1 = aux -> data.value;
-    // n2 = aux -> prox -> data.value;
-    // cout << "VALOR N1: " << n1 << endl;
-    // cout << "VALOR N2: " << n2 << endl;
-    // // cout << endl << "LIXO DOS INFERNO: " << index << endl;
-    // while (aux -> data.index != index) {
-    //     n3 = n1 + n2;
-    //     cout << endl << endl << "VALOR DE N3: " << n3 << endl;
-    //     cout << "VALOR DO INDEX: " << aux -> data.index << endl;
-    //     push_fibonacci(p, n3, index + i);
-    //     i++;
-    //     // print_fibonacci(p);
-        
-    //     aux = p -> top;
-    //     n1 = aux -> data.value;
-    //     n2 = aux -> prox -> data.value;
-    // }
+//     aux = p -> top;
+//     int tmp = aux -> data.index;
+
+//     while (i <= index) {
+//         n1 = aux -> data.value;
+//         n2 = aux -> prox -> data.value;
+//         n3 = n1 + n2;
+//         push_fibonacci(p, n3, tmp + 1);
+
+//         aux = p -> top;
+//         i++;
+//         tmp++;
+//     }
+
+// }
+
+void fibonacci_calc(DPilha *p, int index) {
+    int value, index_aux;
+    int n1, n2;
+    int current_index = p -> top -> data.index;
+    int i = current_index + 2;
 
     while (i <= index) {
-        n1 = aux -> data.value;
-        n2 = aux -> prox -> data.value;
-        n3 = n1 + n2;
-        push_fibonacci(p, n3, tmp + 1);
+        pop_fibonacci(p, &value, &index_aux);
+        n1 = value;
+        
+        pop_fibonacci(p, &value, &index_aux);
+        n2 = value;
 
-        aux = p -> top;
+        push_fibonacci(p, n2, current_index-1);
+        push_fibonacci(p, n1, current_index);
+        push_fibonacci(p, (n1 + n2), current_index + 1);
         i++;
-        tmp++;
+        current_index++;
     }
 
+    print_fibonacci(p);
 }
+
 
 /*
     n = 3 // fibonacci = 2 // index = 1;
@@ -269,62 +279,58 @@ void fibonacci_calc(DPilha *p, int index) {
     n = 9 // fibonacci = 34 // index = 7;
 */
 
-
-
 void problem_2_d() {
     DPilha fibonacci_stack;
     DFPVazia(&fibonacci_stack);
-    fibonacci_stack.base -> data.value = 1;
     char option;
     int n;
 
-    int index = 1;
-    int value = 2;
-
+    int index = 0;
+    int value = 1;
     push_fibonacci(&fibonacci_stack, value, index);
-    // index = 2;
-    // value = 3;
-    // push_fibonacci(&fibonacci_stack, value, index);
-    // index = 3;
-    // value = 5;
-    // push_fibonacci(&fibonacci_stack, value, index);
-    // index = 4;
-    // value = 8;
-    // push_fibonacci(&fibonacci_stack, value, index);
-    // int n = 6;
-    // fibonacci_calc(&fibonacci_stack, (n-2));
-    // print_fibonacci(&fibonacci_stack);
     
+    index = 1;
+    value = 1;
+    push_fibonacci(&fibonacci_stack, value, index);
+
     do {
-        cout << "A para calcular mais um valor;" << endl << "B para sair." << endl;
-        cout << "opcao: ";
         cin >> option;
-        option = toupper(option);
+        cin >> n;
+        cout << "IMPRIMINDO A ATUAL SEQUENCIA: " << endl << endl;
+        print_fibonacci(&fibonacci_stack);
 
-        if (option == 'A') {
-            cout << endl << "Informe o valor para n (numero de iterações fibonacci): ";
-            cin >> n;
+        cout << endl << "IMPRIMINDDO SOMENTE UM VALOR: ";
+        print_fibonacci_single_value(&fibonacci_stack, 1);
 
-            if (verify_index(&fibonacci_stack, (n-2)) == true) {
-                print_fibonacci_single_value(&fibonacci_stack, (n-2));
-            } else {
-                fibonacci_calc(&fibonacci_stack, (n-2));
-                print_fibonacci_single_value(&fibonacci_stack, (n-2));
-            }
-
-
-        } else if (option == 'B') {
-            // simplesmente sai do programa
-        }
+        cout << endl << "TESTANDO CÁLCULO COM VALOR FORA DA PILHA (index = 9): " << endl;
+        fibonacci_calc(&fibonacci_stack, n);
+        cout << endl << "teste" << endl;
+        print_fibonacci_single_value(&fibonacci_stack, n-1);
+        
+        print_fibonacci(&fibonacci_stack);  
     } while (option != 'B');
 
+    // // do {
+    //     cout << "A para calcular mais um valor;" << endl << "B para sair." << endl;
+    //     cout << "opcao: ";
+    //     cin >> option;
+    //     option = toupper(option);
 
+    //     // if (option == 'A') {
+    //         cout << endl << "Informe o valor para n (numero de iterações fibonacci): ";
+    //         cin >> n;
 
+    //         // if (verify_index(&fibonacci_stack, (n - 1)) == true) {
+    //             // print_fibonacci_single_value(&fibonacci_stack, n - 1);
+    //         // } 
+    //         // else {
+    //             fibonacci_calc(&fibonacci_stack, n);
+    //             print_fibonacci_single_value(&fibonacci_stack, n - 1);
+    //         // }
 
-
-
-
-
-
-    // print_fibonacci(&pre_results);
+    //         // print_fibonacci(&fibonacci_stack);
+    //     // } else if (option == 'B') {
+    //         // simplesmente sai do programa
+    //     // }
+    // // } while (option != 'B');
 }
