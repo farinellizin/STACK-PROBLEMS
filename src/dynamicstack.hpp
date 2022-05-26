@@ -12,7 +12,7 @@ typedef struct Block Block;
 typedef struct DPilha DPilha;
 
 struct DItem{
-	int value;
+	long long unsigned int value;
     int index;
     string val;
 };
