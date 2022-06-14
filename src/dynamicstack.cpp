@@ -116,7 +116,7 @@ void fill_operands_stack(DPilha *operands, string math_op) {
 void problem_2_a() {
     string math_op;
     cout << endl << "----------------------------------------------------------------------------------------------";
-
+    getc(stdin);
     cout << endl << endl << "\t\t- Please, inform a mathematical operation of your wish: ";
     getline(cin, math_op);
     math_op = math_op + "@";
@@ -139,7 +139,6 @@ void problem_2_a() {
     cout << endl << "\t\t   ~ Stack containing only the operands of your operation ~" << endl << endl;
     fill_operands_stack(&operands, math_op);
     DPImprime(&operands);
-    cout << endl << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -248,17 +247,6 @@ void fibonacci_calc(DPilha *p, int index) {
     print_fibonacci(p);
 }
 
-
-/*
-    n = 3 // fibonacci = 2 // index = 1;
-    n = 4 // fibonacci = 3 // index = 2;
-    n = 5 // fibonacci = 5 // index = 3;
-    n = 6 // fibonacci = 8 // index = 4;
-    n = 7 // fibonacci = 13 // index = 5;
-    n = 8 // fibonacci = 21 // index = 6;
-    n = 9 // fibonacci = 34 // index = 7;
-*/
-
 void problem_2_d() {
     DPilha fibonacci_stack;
     DFPVazia(&fibonacci_stack);
@@ -282,7 +270,6 @@ void problem_2_d() {
             cout << endl << endl << "APOS CALCULAR, ASSIM FICOU A PILHA DE VALORES: " << endl << endl;
             print_fibonacci(&fibonacci_stack);
         } else if (option == 'B') {
-            // simplesmente sai do programa
         }
     } while (option != 'B');
 }
